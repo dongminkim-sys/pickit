@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+    }
+    .header {
+      background: #e60023;
+      color: #fff;
+      padding: 16px;
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .header p {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+    .content {
+      padding: 16px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: #e60023;
+    }
+    .field {
+      margin-bottom: 14px;
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #e60023;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #cc001f; }
+    .status {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+    .status.success {
+      display: block;
+      background: #f0fdf4;
+      color: #16a34a;
+    }
+    .status.error {
+      display: block;
+      background: #fef2f2;
+      color: #dc2626;
+    }
+    .info {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f8f8f8;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>핔잇</h1>
+    <p>광고 수집기</p>
+  </div>
+  <div class="content">
+    <div class="field">
+      <label>서버 주소</label>
+      <input type="text" id="serverUrl" placeholder="http://localhost:3000" />
+    </div>
+    <div class="field">
+      <label>수집자 이름</label>
+      <input type="text" id="userName" placeholder="예: dongmin" />
+    </div>
+    <div class="field">
+      <label>기본 카테고리</label>
+      <select id="defaultCategory">
+        <option value="">선택 안함</option>
+        <option value="뷰티">뷰티</option>
+        <option value="패션">패션</option>
+        <option value="건강기능식품">건강기능식품</option>
+        <option value="식품">식품</option>
+        <option value="생활용품">생활용품</option>
+        <option value="전자기기">전자기기</option>
+        <option value="교육">교육</option>
+        <option value="금융">금융</option>
+        <option value="앱/서비스">앱/서비스</option>
+        <option value="기타">기타</option>
+      </select>
+    </div>
+    <button class="btn" id="saveBtn">설정 저장</button>
+    <div id="status" class="status"></div>
+    <div class="info">
+      <strong>지원 플랫폼:</strong><br>
+      • Meta 광고 라이브러리<br>
+      • 네이버 GFA 광고<br><br>
+      광고에 표시되는 <strong>「핔잇!」</strong> 버튼을 눌러 수집하세요.<br>
+      <span style="color:#aaa;font-size:11px">네이버: 광고 카드에 마우스를 올리면 버튼이 나타납니다</span>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

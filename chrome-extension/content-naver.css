@@ -1,0 +1,177 @@
+/* 핔잇 Naver GFA 수집 버튼 — 오버레이 방식 (position: fixed) */
+.pickit-naver-btn {
+  position: fixed !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  padding: 6px 12px !important;
+  background: #e60023 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25) !important;
+  pointer-events: auto !important;
+  z-index: 100000 !important;
+  transition: background 0.2s !important;
+}
+
+.pickit-naver-btn:hover:not(.pickit-collected) {
+  background: #cc001f !important;
+}
+
+.pickit-naver-btn.pickit-collected {
+  background: #9ca3af !important;
+  cursor: default !important;
+}
+
+.pickit-naver-btn svg {
+  width: 12px !important;
+  height: 12px !important;
+  fill: currentColor !important;
+  flex-shrink: 0 !important;
+}
+
+/* ─── 수집 패널 (content.css와 동일) ─── */
+.pickit-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 360px;
+  height: 100vh;
+  background: #fff;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+  z-index: 100000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.pickit-panel.open {
+  transform: translateX(0);
+}
+
+.pickit-panel-header {
+  background: #e60023;
+  color: #fff;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pickit-panel-header h2 {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.pickit-panel-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.pickit-panel-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.pickit-panel-field {
+  margin-bottom: 16px;
+}
+
+.pickit-panel-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+.pickit-panel-field input,
+.pickit-panel-field select,
+.pickit-panel-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+}
+
+.pickit-panel-field input:focus,
+.pickit-panel-field select:focus,
+.pickit-panel-field textarea:focus {
+  border-color: #e60023;
+}
+
+.pickit-panel-field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.pickit-panel-preview {
+  margin-bottom: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.pickit-panel-preview img,
+.pickit-panel-preview video {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.pickit-panel-submit {
+  width: 100%;
+  padding: 14px;
+  background: #e60023;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.pickit-panel-submit:hover {
+  background: #cc001f;
+}
+
+.pickit-panel-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.pickit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.pickit-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}

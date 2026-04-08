@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "핔잇 - 광고 수집기",
+  "version": "1.1.0",
+  "description": "Meta 광고 라이브러리 및 네이버 GFA 광고를 핔잇으로 바로 수집합니다",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "http://localhost:3001/*",
+    "https://pickit.to/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/ads/library/*",
+        "https://facebook.com/ads/library/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.naver.com/*",
+        "https://m.naver.com/*",
+        "https://news.naver.com/*",
+        "https://section.blog.naver.com/*",
+        "https://blog.naver.com/*",
+        "https://cafe.naver.com/*",
+        "https://sports.news.naver.com/*",
+        "https://entertain.naver.com/*",
+        "https://land.naver.com/*",
+        "https://finance.naver.com/*"
+      ],
+      "js": ["content-naver.js"],
+      "css": ["content-naver.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "핔잇 광고 수집기"
+  },
+  "icons": {
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
