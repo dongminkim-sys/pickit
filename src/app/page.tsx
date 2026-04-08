@@ -32,8 +32,9 @@ export default function Home() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set());
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [competitors, setCompetitors] = useState<Competitor[]>([]);
-  const [showCompSidebar, setShowCompSidebar] = useState(false);
+  const [showCompSidebar, setShowCompSidebar] = useState(true);
   const [collapsedCats, setCollapsedCats] = useState<Set<string>>(new Set());
+  const [expandedCompId, setExpandedCompId] = useState<string | null>(null);
 
   const fetchCompetitors = useCallback(async () => {
     const res = await fetch("/api/competitors");
@@ -265,11 +266,8 @@ export default function Home() {
         {showCompSidebar && (
           <aside className="w-60 shrink-0 bg-white sticky top-[60px] h-[calc(100vh-60px)] overflow-y-auto hidden sm:block shadow-[2px_0_12px_rgba(0,0,0,0.06)] z-10">
             <div className="p-3">
-              <a href="/competitors" className="flex items-center justify-between px-3 py-2.5 text-xs font-bold text-text-secondary bg-gray-50 rounded-xl hover:bg-accent/5 hover:text-accent transition-all">
-                <span>경쟁사 관리</span>
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+              <a href="/competitors" className="w-full flex items-center justify-center gap-1.5 px-3 py-2.5 text-sm font-bold text-accent bg-accent/5 rounded-xl hover:bg-accent/10 transition-colors">
+                경쟁사 관리
               </a>
             </div>
             {competitors.length === 0 ? (
@@ -307,36 +305,48 @@ export default function Home() {
                           </svg>
                         </div>
                       </button>
-                      {!collapsedCats.has(cat) && (
-                        <div className="space-y-1 mt-0.5">
-                          {comps.map((comp) => {
-                            const links: CompetitorLink[] = JSON.parse(comp.links || "[]");
-                            return (
-                              <div key={comp.id} className="bg-gray-50/80 rounded-xl overflow-hidden">
-                                <div className="px-3 py-2 text-[13px] font-bold text-text-primary">{comp.name}</div>
-                                {links.length > 0 && (
-                                  <div className="px-1.5 pb-1.5">
-                                    {links.map((link, i) => (
-                                      <a
-                                        key={i}
-                                        href={link.url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-2 py-1.5 text-xs text-text-secondary hover:text-accent hover:bg-white rounded-lg transition-colors"
-                                      >
-                                        <svg className="w-3 h-3 shrink-0 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                        </svg>
-                                        <span className="truncate">{link.label}</span>
-                                      </a>
-                                    ))}
-                                  </div>
-                                )}
+                      {!collapsedCats.has(cat) && comps.map((comp) => {
+                        const links: CompetitorLink[] = JSON.parse(comp.links || "[]");
+                        const isExpanded = expandedCompId === comp.id;
+                        return (
+                          <div key={comp.id}>
+                            <button
+                              onClick={() => setExpandedCompId(isExpanded ? null : comp.id)}
+                              className={`w-full text-left px-3 py-2 rounded-xl text-sm font-medium transition-colors mb-0.5 flex items-center gap-2 ${
+                                isExpanded
+                                  ? "bg-accent/5 text-accent"
+                                  : "text-text-secondary hover:bg-gray-50 hover:text-text-primary"
+                              }`}
+                            >
+                              {isExpanded && <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />}
+                              <span className="truncate">{comp.name}</span>
+                              {links.length > 0 && (
+                                <svg className={`w-3 h-3 shrink-0 ml-auto transition-transform ${isExpanded ? "rotate-180" : ""} ${isExpanded ? "text-accent/50" : "text-text-muted/30"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                              )}
+                            </button>
+                            {isExpanded && links.length > 0 && (
+                              <div className="ml-3 mb-1 pl-2 border-l-2 border-accent/10">
+                                {links.map((link, i) => (
+                                  <a
+                                    key={i}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-2 px-2 py-1.5 text-xs text-text-secondary hover:text-accent rounded-lg transition-colors"
+                                  >
+                                    <svg className="w-3 h-3 shrink-0 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                    <span className="truncate">{link.label}</span>
+                                  </a>
+                                ))}
                               </div>
-                            );
-                          })}
-                        </div>
-                      )}
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
                   ));
                 })()}
