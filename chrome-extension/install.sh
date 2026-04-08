@@ -54,7 +54,7 @@ echo ""
 
 # 크롬 확장프로그램 페이지 열기
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  open "chrome://extensions"
+  open -a "Google Chrome" "chrome://extensions" 2>/dev/null || open -a "Chromium" "chrome://extensions" 2>/dev/null || echo "  * 크롬에서 chrome://extensions 를 직접 열어주세요."
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  xdg-open "chrome://extensions" 2>/dev/null || true
+  google-chrome "chrome://extensions" 2>/dev/null || chromium-browser "chrome://extensions" 2>/dev/null || xdg-open "chrome://extensions" 2>/dev/null || echo "  * 크롬에서 chrome://extensions 를 직접 열어주세요."
 fi

@@ -18,7 +18,8 @@ bash <(curl -s https://raw.githubusercontent.com/dongminkim-sys/pickit/main/chro
 이후 크롬에서:
 1. 우측 상단 **개발자 모드** 토글을 켭니다
 2. **압축 해제된 확장 프로그램을 로드합니다** 클릭
-3. 클립보드에 복사된 경로를 붙여넣기하여 폴더를 선택합니다
+3. 폴더 선택 창에서 `Cmd+Shift+G` (Mac) 또는 `Ctrl+L` (Windows)를 누르고, 클립보드에 복사된 경로를 붙여넣어 이동합니다
+4. **열기**를 클릭합니다
 
 ## 초기 설정
 
