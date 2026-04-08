@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
       ad_start_date = null,
       active_days = null,
       created_by = "",
+      ad_url = "",
     } = body;
 
     if (!media_url && !title) {
@@ -99,8 +100,8 @@ export async function POST(request: NextRequest) {
     const now = new Date().toISOString();
 
     const stmt = db.prepare(`
-      INSERT INTO references_ad (id, title, brand, platform, media_type, media_url, thumbnail_url, category, tags, likes, views, ad_start_date, ad_end_date, active_days, memo, aspect_ratio, created_by, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO references_ad (id, title, brand, platform, media_type, media_url, thumbnail_url, category, tags, likes, views, ad_start_date, ad_end_date, active_days, memo, aspect_ratio, created_by, ad_url, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
     stmt.run(
@@ -121,6 +122,7 @@ export async function POST(request: NextRequest) {
       memo,
       null,
       created_by,
+      ad_url,
       now,
       now
     );

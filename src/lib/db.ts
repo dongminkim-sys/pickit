@@ -115,6 +115,9 @@ function initDb(db: Database.Database) {
   if (!cols.find((c) => c.name === "transcript")) {
     db.exec("ALTER TABLE references_ad ADD COLUMN transcript TEXT NOT NULL DEFAULT ''");
   }
+  if (!cols.find((c) => c.name === "ad_url")) {
+    db.exec("ALTER TABLE references_ad ADD COLUMN ad_url TEXT NOT NULL DEFAULT ''");
+  }
 
   // Competitors migrations
   const compCols = db.prepare("PRAGMA table_info(competitors)").all() as { name: string }[];
@@ -159,6 +162,7 @@ export interface AdReference {
   memo: string;
   aspect_ratio: number | null;
   transcript: string;
+  ad_url: string;
   created_by: string;
   created_at: string;
   updated_at: string;

@@ -55,6 +55,7 @@
       ad_start_date: null,
       library_id: "",
       platforms: [],
+      ad_url: "",
     };
 
     // Brand name: inside ._8nsi container, the <a> link to the facebook page
@@ -144,6 +145,18 @@
       data.library_id = libIdMatch[1] || libIdMatch[2];
     }
 
+    // Landing URL: extract from Facebook redirect link (l.facebook.com/l.php?u=...)
+    const landingLink = adCard.querySelector('a[href*="l.facebook.com/l.php"]');
+    if (landingLink) {
+      try {
+        const fbUrl = new URL(landingLink.href);
+        const realUrl = fbUrl.searchParams.get("u");
+        if (realUrl) {
+          data.ad_url = realUrl;
+        }
+      } catch { /* ignore */ }
+    }
+
     // Use brand as title fallback
     if (!data.title && data.brand) {
       data.title = `${data.brand} 광고`;
@@ -203,6 +216,10 @@
           </select>
         </div>
         <div class="pickit-panel-field">
+          <label>랜딩 링크</label>
+          <input type="text" id="pickit-adurl" class="pickit-readonly" readonly />
+        </div>
+        <div class="pickit-panel-field">
           <label>태그 (쉼표 구분)</label>
           <input type="text" id="pickit-tags" placeholder="예: 할인, 신제품, 여름" />
         </div>
@@ -248,6 +265,7 @@
     }
     document.getElementById("pickit-activedays").value = activeDays;
 
+    document.getElementById("pickit-adurl").value = adData.ad_url || "";
     document.getElementById("pickit-category").value = settings.defaultCategory || "";
     document.getElementById("pickit-tags").value = adData.library_id ? `ID:${adData.library_id}` : "";
     document.getElementById("pickit-memo").value = "";
@@ -315,6 +333,7 @@
       ad_start_date: currentAdData.ad_start_date,
       active_days: currentAdData._activeDays || null,
       created_by: settings.userName,
+      ad_url: currentAdData.ad_url || "",
     };
 
     try {
